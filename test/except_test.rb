@@ -4,8 +4,8 @@ class ExceptTest < Test::Unit::TestCase
 
   context "A class which has included Pacecar" do
     setup do
-      @args = 1, '3', 5..7, [10, %w(12 13)], 14...16
-      @ids = 1, 3, 5, 6, 7, 10, 12, 13, 14, 15
+      @args = 1, '3', 5..7, [10, %w(12 13)], 14...16, User.new{ |u| u.id = 100 }
+      @ids = 1, 3, 5, 6, 7, 10, 12, 13, 14, 15, 100
     end
     context "with except method" do
       should "set the correct proxy options for an except column method" do

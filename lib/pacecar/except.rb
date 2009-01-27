@@ -18,6 +18,8 @@ module Pacecar
             ids << arg
           when String
             ids << arg.to_i
+          when ActiveRecord::Base
+            ids << arg.id
           else
             ids + arg.to_a
           end
