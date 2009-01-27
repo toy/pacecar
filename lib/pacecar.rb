@@ -1,6 +1,7 @@
 require 'pacecar/boolean'
 require 'pacecar/datetime'
 require 'pacecar/duration'
+require 'pacecar/except'
 require 'pacecar/helpers'
 require 'pacecar/limit'
 require 'pacecar/order'
@@ -31,6 +32,7 @@ module Pacecar
         include Pacecar::Boolean
         include Pacecar::Datetime
         include Pacecar::Duration
+        include Pacecar::Except
         include Pacecar::Limit
         include Pacecar::Order
         include Pacecar::Polymorph

@@ -92,6 +92,18 @@ Records where all of a list of columns match the term...
 
   User.search_for 'test', :on => [:first_name, :last_name], :require => :all
 
+= Id columns
+
+Records except...
+
+  User.except 1, 2, 3
+  User.except %w(1, 2, 3)
+  User.except 1..5
+  User.except 1, '2', [4..5, 6...7], [10]
+
+  Post.owner_ids_except 1, 3, 4
+  Post.user_ids_except 6, 7, 8
+
 = Boolean columns
 
 Records that are all admins or non-admins...
