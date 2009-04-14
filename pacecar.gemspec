@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'pacecar'
-  s.version = '1.1.4'
+  s.version = '1.1.5'
   s.date = %q{2009-04-10}
   s.email = 'corey@fullofdesign.ca'
   s.homepage = 'http://github.com/coreymartella/pacecar'
