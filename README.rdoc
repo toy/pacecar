@@ -1,6 +1,12 @@
 == Pacecar
 
-Pacecar adds named_scope methods to ActiveRecord classes via database column introspection.
+Pacecar adds named_scope methods and other common functionality to ActiveRecord classes via database column introspection.
+
+Pacecar automatically includes the Pacecar::Helpers module into all ActiveRecord::Base classes.
+
+To get all Pacecar functionality, you need to "include Pacecar" in your class.
+
+To get some subset (for example, only the state functionality), you can do something like "include Pacecar::State" to get only the module(s) you want.
 
 == Usage
 
@@ -35,21 +41,31 @@ Assuming a database schema...
 And some basic model declarations...
 
   class User < ActiveRecord::Base
+    include Pacecar
     has_many :posts, :as => :owner
     has_many :comments
-    scopes_ranking :comments
+    has_many :articles
+    has_ranking :comments
+    has_recent_records :comments
+    has_recent_records :articles, :comments
   end
 
   class Post < ActiveRecord::Base
+    include Pacecar
     PUBLICATION_STATES = %w(Draft Submitted Rejected Accepted)
     TYPES = %w(Free Open Private Anonymous PostModern)
     belongs_to :owner, :polymorphic => true
-    scopes_state :publication_state
-    scopes_state :post_type, :with => TYPES
-    scopes_polymorph :owner
+    has_state :publication_state
+    has_state :post_type, :with => TYPES
+    has_polymorph :owner
   end
 
   class Comment < ActiveRecord::Base
+    include Pacecar
+    belongs_to :user
+  end
+
+  class Article < ActiveRecord::Base
     belongs_to :user
   end
 
@@ -111,6 +127,10 @@ Records that are all admins or non-admins...
   User.admin
   User.not_admin
 
+The "balance" (count of true minus false for column in question)...
+
+  User.admin_balance
+
 = Datetime columns
 
 Records approved before or after certain times...
@@ -153,12 +173,23 @@ Records with the most and least associated records...
   User.maximum_comments
   User.minimum_comments
 
+Records with associated records since a certain time...
+
+  User.recent_comments_since(2.days.ago)
+  User.recent_comments_and_posts_since(3.days.ago)
+  User.recent_comments_or_posts_since(4.days.ago)
+
 = State columns
 
 Records which are in a particular state, or not in a state...
 
   Post.publication_state_draft
   Post.post_type_not_open
+
+Query methods on instances to check state...
+
+  Post.first.publication_state_draft?
+  Post.last.post_type_not_open?
 
 = Limits
 
