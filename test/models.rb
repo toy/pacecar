@@ -1,4 +1,4 @@
-ActiveRecord::Base.establish_connection :adapter  => 'sqlite3', :database => File.join(File.dirname(__FILE__), 'test.db')
+ActiveRecord::Base.establish_connection :adapter  => 'sqlite3', :database => ':memory:'
 
 class CreateSchema < ActiveRecord::Migration
   def self.up
