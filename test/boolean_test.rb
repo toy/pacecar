@@ -13,7 +13,7 @@ class BooleanTest < Test::Unit::TestCase
     end
     should "set the correct proxy options for a not_ boolean column method" do
       assert @class.respond_to?(:not_admin)
-      proxy_options = { :conditions => ['"users".admin = ?', false] }
+      proxy_options = { :conditions => ['"users".admin != ?', true] }
       assert_equal proxy_options, @class.not_admin.proxy_options
     end
     context "With boolean column scopes that can count" do
